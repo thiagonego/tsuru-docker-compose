@@ -1,0 +1,47 @@
+version: '2'
+services:
+
+  tsuru-redis:
+    image: redis    
+    ports:
+      - 6379:6379
+    restart: always   
+
+  tsuru-mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    restart: always 
+
+  tsuru-planb:
+    image: tsuru/planb:v1 
+    ports:
+      - 81:80
+    external_links:
+      - tsuru-redis:tsuru-redis      
+    restart: always    
+    command: --listen ":80" --read-redis-host=tsuru-redis --write-redis-host=tsuru-redis
+    links:
+      - tsuru-redis:tsuru-redis
+
+  tsuru-api:
+    build: tsuru-server
+    ports:
+      - 82:80
+    restart: always  
+    external_links:
+      - tsuru-redis:tsuru-redis        
+      - tsuru-mongo:tsuru-mongo        
+      - tsuru-planb:tsuru-planb 
+
+# tsuru-api 
+#   mongo
+#   redis
+# 
+# gandalf
+#   mongo
+# 
+# planb
+#   redis
+
+
