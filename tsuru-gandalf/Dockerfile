@@ -27,13 +27,10 @@ COPY pre-receive /home/git/bare-template/hooks/
 RUN chmod +x /home/git/bare-template/hooks/pre-receive
 #RUN chown -R git:git /home/git/bare-template
 
-RUN cat | sudo tee -a /home/git/.bash_profile <<EOF \
-export ARCHIVE_SERVER_READ=http://tsuru-archive-server:6262 ARCHIVE_SERVER_WRITE=http://tsuru-archive-server:6161 \
-EOF
-
-RUN cat | sudo tee -a ~/.bash_profile <<EOF \
-export ARCHIVE_SERVER_READ=http://tsuru-archive-server:6262 ARCHIVE_SERVER_WRITE=http://tsuru-archive-server:6161 \
-EOF
+RUN echo "export ARCHIVE_SERVER_READ=http://10.5.3.91:6060" | tee -a /home/git/.bashrc > /dev/null
+RUN echo "export ARCHIVE_SERVER_WRITE=http://10.5.3.91:6161" | tee -a /home/git/.bashrc > /dev/null
+RUN echo "export ARCHIVE_SERVER_READ=http://10.5.3.91:6060" | tee -a ~/.bashrc > /dev/null
+RUN echo "export ARCHIVE_SERVER_WRITE=http://10.5.3.91:6161" | tee -a ~/.bashrc > /dev/null
 
 EXPOSE 8000
 

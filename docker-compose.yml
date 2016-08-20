@@ -37,7 +37,7 @@ services:
   tsuru-gandalf:
     build: tsuru-gandalf
     environment:
-      - ARCHIVE_SERVER_READ=http://tsuru-archive-server:6262 
+      - ARCHIVE_SERVER_READ=http://tsuru-archive-server:6060 
       - ARCHIVE_SERVER_WRITE=http://tsuru-archive-server:6161 
       - TSURU_HOST=
       - TSURU_TOKEN=
