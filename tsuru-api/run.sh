@@ -1,4 +1,3 @@
 #!/bin/bash
-
 /usr/sbin/rsyslogd
-/usr/bin/tsurud api
+/usr/bin/tsurud api --config=/data/tsuru/tsuru.conf

@@ -9,6 +9,8 @@ services:
 
   tsuru-mongo:
     image: mongo
+    volumes:
+      - ./data/mongo:/data/db
     ports:
       - 27017:27017
     restart: always 
@@ -45,8 +47,9 @@ services:
     environment:
       - ARCHIVE_SERVER_READ=http://tsuru-archive-server:6060 
       - ARCHIVE_SERVER_WRITE=http://tsuru-archive-server:6161 
-      - TSURU_HOST=
-      - TSURU_TOKEN=     
+      - TSURU_HOST=http://tsuru-api:9090
+    volumes:
+      - ./config:/usr/local/tsuru/config/
     ports:
       - 8000:8000
     external_links:
@@ -60,7 +63,7 @@ services:
       - 9090:8080
     volumes:
       - ./tsuru-api:/data/tsuru
-    command: api --config=/data/tsuru/tsuru.conf
+      - ./config:/usr/local/tsuru/config/
     external_links:
       - tsuru-redis:tsuru-redis        
       - tsuru-mongo:tsuru-mongo        
