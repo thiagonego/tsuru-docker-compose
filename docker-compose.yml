@@ -40,14 +40,13 @@ services:
       - ARCHIVE_SERVER_READ=http://tsuru-archive-server:6060 
       - ARCHIVE_SERVER_WRITE=http://tsuru-archive-server:6161 
       - TSURU_HOST=
-      - TSURU_TOKEN=      
+      - TSURU_TOKEN=     
     ports:
       - 8000:8000
     external_links:
       - tsuru-mongo:tsuru-mongo 
-      - tsuru-archive-server:tsuru-archive-server 
-    #command: /etc/init.d/rsyslog start && /usr/bin/gandalf-server -config=/etc/gandalf.conf
-    #restart: always      
+      - tsuru-archive-server:tsuru-archive-server     
+    restart: always      
 
 #  tsuru-server:
 #    build: tsuru-server
