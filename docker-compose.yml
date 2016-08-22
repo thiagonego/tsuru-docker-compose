@@ -13,6 +13,12 @@ services:
       - 27017:27017
     restart: always 
 
+  tsuru-registry:
+    image: registry
+    ports:
+      - 5000:5000
+    restart: always     
+
   tsuru-planb:
     image: tsuru/planb:v1 
     ports:
@@ -48,15 +54,21 @@ services:
       - tsuru-archive-server:tsuru-archive-server     
     restart: always      
 
-#  tsuru-server:
-#    build: tsuru-server
-#    ports:
-#      - 82:80
-#    restart: always  
-#    external_links:
-#      - tsuru-redis:tsuru-redis        
-#      - tsuru-mongo:tsuru-mongo        
-#      - tsuru-planb:tsuru-planb 
+  tsuru-api:
+    build: tsuru-api
+    ports:
+      - 9090:8080
+    volumes:
+      - ./tsuru-api:/data/tsuru
+    command: api --config=/data/tsuru/tsuru.conf
+    external_links:
+      - tsuru-redis:tsuru-redis        
+      - tsuru-mongo:tsuru-mongo        
+      - tsuru-registry:tsuru-registry 
+      - tsuru-planb:tsuru-planb 
+      - tsuru-archive-server:tsuru-archive-server 
+      - tsuru-gandalf:tsuru-gandalf 
+    #restart: always  
 
 # tsuru-api 
 #   mongo
