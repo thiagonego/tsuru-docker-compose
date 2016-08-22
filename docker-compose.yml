@@ -31,7 +31,7 @@ services:
       - 6161:6161
     external_links:
       - tsuru-mongo:tsuru-mongo 
-    command: /usr/bin/archive-server -dir=/var/lib/archive-server/archives -read-http=0.0.0.0:6060 -write-http=127.0.0.1:6161 -mongodb=tsuru-mongo:27017 -dbname=archives
+    command: /usr/bin/archive-server -dir=/var/lib/archive-server/archives -read-http=0.0.0.0:6060 -write-http=0.0.0.0:6161 -mongodb=tsuru-mongo:27017 -dbname=archives
     restart: always    
   
   tsuru-gandalf:
@@ -46,7 +46,7 @@ services:
     external_links:
       - tsuru-mongo:tsuru-mongo 
       - tsuru-archive-server:tsuru-archive-server 
-    #restart: always      
+    restart: always      
 
 #  tsuru-server:
 #    build: tsuru-server
